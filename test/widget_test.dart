@@ -11,20 +11,27 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:football_news/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
+  testWidgets('App starts with login page', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify that the login page is displayed
+    expect(find.text('Login'), findsWidgets);
+    expect(find.text('Username'), findsOneWidget);
+    expect(find.text('Password'), findsOneWidget);
+    
+    // Verify the register link is present
+    expect(find.text('Don\'t have an account? Register'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Login form has required fields', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Find the username and password fields
+    expect(find.byType(TextField), findsNWidgets(2));
+    
+    // Find the login button
+    expect(find.widgetWithText(ElevatedButton, 'Login'), findsOneWidget);
   });
 }
